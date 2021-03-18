@@ -16,6 +16,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var vehicleArray = [];
+var newPrice = 0;
+var regularPrice = 0;
 // create a parent class called Vehicles
 var Vehicles = /** @class */ (function () {
     function Vehicles(brand, model, vehicleType, vehicleAge, vehiclePrice, vehicleImg) {
@@ -29,20 +31,17 @@ var Vehicles = /** @class */ (function () {
     }
     // define properties and methods for the parent class ===> consider the inheritance concept
     Vehicles.prototype.showVehicles = function () {
-        return "\n      <div class=\"card m-2\">\n        <img src=\"" + this.vehicleImg + "\" class=\"card-img-top\" alt=\"...\">\n        <div class=\"card-body\">\n          <h5 class=\"card-title\">Model: " + this.model + "</h5>\n          <p class=\"card-text\">Brand: " + this.brand + "</p>\n          <p class=\"card-text\">Type: " + this.vehicleType + "</p>\n          <p class=\"card-text\">Age: " + this.vehicleAge + "</p>\n    ";
+        return "\n      <div class=\"col\">\n        <div class=\"card\">\n          <img src=\"" + this.vehicleImg + "\" class=\"card-img-top\" alt=\"...\">\n          <div class=\"card-body\">\n          <h5 class=\"card-title\">Model: " + this.model + "</h5>\n          <p class=\"card-text\">Brand: " + this.brand + "</p>\n          <p class=\"card-text\">Type: " + this.vehicleType + "</p>\n          <p class=\"card-text\">Age: " + this.vehicleAge + "</p>\n    ";
     };
     Vehicles.prototype.calculatePrice = function () {
         if (this.vehicleAge <= 2) {
-            var newPrice = this.vehiclePrice += 1000;
-            return "</div>\n      <div class=\"card-footer\">\n        <small class=\"text-muted\">Price: " + newPrice + " \u20AC</small>\n      </div>\n    </div>";
+            var newPrice_1 = this.vehiclePrice += 1000;
+            return "\n      </div>\n      <div class=\"card-footer\">\n        <div class=\"btn-success rounded\">\n          <div class=\"btn d-flex justify-content-center \"><span class=\"price text-light\">Show Price</span></div>\n        </div>\n        <div class=\"btn-warning hidden rounded\">\n          <div class=\"btn d-flex justify-content-center\"><span class=\"price\">" + newPrice_1 + " \u20AC</span></div>\n        </div>\n      </div>\n    </div>";
         }
         else if (this.vehicleAge > 2) {
-            this.vehiclePrice += 100;
-            return "</div>\n      <div class=\"card-footer\" id=\"show\">\n        <small class=\"text-muted\">Price: " + this.vehiclePrice + " \u20AC</small>\n      </div>\n    </div>";
+            var regularPrice_1 = this.vehiclePrice += 100;
+            return "</div>\n      <div class=\"card-footer\">\n        <div class=\"btn-success rounded\">\n          <div class=\"btn d-flex justify-content-center \"><span class=\"price text-light\">Show Price</span></div>\n        </div>\n        <div class=\"btn-warning hidden rounded\">\n          <div class=\"btn d-flex justify-content-center\"><span class=\"price\">" + regularPrice_1 + " \u20AC</span></div>\n        </div>\n      </div>\n    </div>";
         }
-    };
-    Vehicles.prototype.showPrice = function () {
-        return document.getElementById("show").style.background = "#F5C518";
     };
     return Vehicles;
 }());
@@ -95,3 +94,7 @@ for (var _i = 0, vehicleArray_1 = vehicleArray; _i < vehicleArray_1.length; _i++
 }
 console.table(vehicleArray); // check with console.table() which elements are inside the loop
 // Based on the personal vehicle performance model, kilometers left, number of seats, fuel type and year of production calculate the price once the user click on the button "show price" --- use your dummy custom formula
+Array.from(document.querySelectorAll(".btn-success")).forEach(function (button) { return button.addEventListener("click", function () {
+    this.parentNode.querySelector(".btn-warning").classList.toggle("show");
+    this.parentNode.querySelector(".btn-success").classList.toggle("hidden");
+}); });

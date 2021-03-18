@@ -3,6 +3,9 @@
 
 var vehicleArray: Array<any> = [];
 
+let newPrice = 0;
+let regularPrice = 0;
+
 interface VehiclesData {
   brand: string;
   model: string;
@@ -37,9 +40,10 @@ class Vehicles implements VehiclesData {
   // define properties and methods for the parent class ===> consider the inheritance concept
   showVehicles() {
       return `
-      <div class="card m-2">
-        <img src="${this.vehicleImg}" class="card-img-top" alt="...">
-        <div class="card-body">
+      <div class="col">
+        <div class="card">
+          <img src="${this.vehicleImg}" class="card-img-top" alt="...">
+          <div class="card-body">
           <h5 class="card-title">Model: ${this.model}</h5>
           <p class="card-text">Brand: ${this.brand}</p>
           <p class="card-text">Type: ${this.vehicleType}</p>
@@ -50,26 +54,35 @@ class Vehicles implements VehiclesData {
   calculatePrice() { // divide the container to insert elements in a specific area/place
     if (this.vehicleAge <= 2) {
       let newPrice = this.vehiclePrice += 1000;
-      return  `</div>
+      return  `
+      </div>
       <div class="card-footer">
-        <small class="text-muted">Price: ${newPrice} €</small>
+        <div class="btn-success rounded">
+          <div class="btn d-flex justify-content-center "><span class="price text-light">Show Price</span></div>
+        </div>
+        <div class="btn-warning hidden rounded">
+          <div class="btn d-flex justify-content-center"><span class="price">${newPrice} €</span></div>
+        </div>
       </div>
     </div>`;
     } else if (this.vehicleAge > 2) {
-      this.vehiclePrice += 100;
+      let regularPrice = this.vehiclePrice += 100;
       return `</div>
-      <div class="card-footer" id="show">
-        <small class="text-muted">Price: ${this.vehiclePrice} €</small>
+      <div class="card-footer">
+        <div class="btn-success rounded">
+          <div class="btn d-flex justify-content-center "><span class="price text-light">Show Price</span></div>
+        </div>
+        <div class="btn-warning hidden rounded">
+          <div class="btn d-flex justify-content-center"><span class="price">${regularPrice} €</span></div>
+        </div>
       </div>
     </div>`;
     }
   }
-
-  showPrice() {
-    return document.getElementById("show").style.background = "#F5C518"; 
-    
-  }
 }
+
+
+
 
 var carOne = new Vehicles("VW", "Beetle", "Oldie but Goldie", 40, 2009, "img/dan-gold-N7RiDzfF2iw-unsplash.jpg")
 var carTwo = new Vehicles("Ferrari", "Yellow Style", "Sport", 1, 5009, "img/dhiva-krishna-X16zXcbxU4U-unsplash.jpg")
@@ -126,3 +139,10 @@ console.table(vehicleArray); // check with console.table() which elements are in
 
 
   // Based on the personal vehicle performance model, kilometers left, number of seats, fuel type and year of production calculate the price once the user click on the button "show price" --- use your dummy custom formula
+
+
+Array.from(document.querySelectorAll(".btn-success")).forEach(button => button.addEventListener("click", function(){                                          
+  this.parentNode.querySelector(".btn-warning").classList.toggle("show");
+  this.parentNode.querySelector(".btn-success").classList.toggle("hidden") 
+  })
+);

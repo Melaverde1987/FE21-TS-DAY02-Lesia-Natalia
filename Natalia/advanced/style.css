@@ -1,3 +1,16 @@
-.hiddden {
+.hidden {
+  /*visibility:hidden; */
   display: none;
+}
+
+
+
+.show {
+  /*visibility: visible;*/
+  display: block;
+}
+
+.centerElement {
+  margin: 0;
+  padding: 0;
 }
