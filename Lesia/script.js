@@ -22,7 +22,6 @@ var PersonData = /** @class */ (function () {
     PersonData.prototype.greeting = function () {
         return 'Hello there, My name is ' + this.personName + ' and I am ' + this.personAge + 'years old, and I am a ' + this.jobTitle;
     };
-    ;
     return PersonData;
 }());
 var Salary = /** @class */ (function (_super) {
@@ -33,7 +32,7 @@ var Salary = /** @class */ (function (_super) {
         return _this;
     }
     Salary.prototype.showMessage = function () {
-        return _super.prototype.greeting.call(this) + " and the salary is " + this.salary + " ";
+        return _super.prototype.greeting.call(this) + " and the salary is " + this.salary;
     };
     return Salary;
 }(PersonData));

@@ -18,7 +18,7 @@ class PersonData implements Person {
 
     greeting () {
         return 'Hello there, My name is ' + this.personName + ' and I am ' + this.personAge + 'years old, and I am a ' + this.jobTitle;
-    };
+    }
 }
 
 class Salary extends PersonData {
@@ -28,7 +28,7 @@ class Salary extends PersonData {
         this.salary = salary;
     }
     showMessage() {
-        return `${super.greeting()} and the salary is ${this.salary} `;
+        return `${super.greeting()} and the salary is ${this.salary}`;
     }
 }
 
