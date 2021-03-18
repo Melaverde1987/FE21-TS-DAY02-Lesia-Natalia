@@ -18,12 +18,12 @@ var __extends = (this && this.__extends) || (function () {
 var vehicleArray = [];
 // create a parent class called Vehicles
 var Vehicles = /** @class */ (function () {
-    function Vehicles(brand, model, vehicleType, vehicleAge, vehicleImg) {
+    function Vehicles(brand, model, vehicleType, vehicleAge, vehiclePrice, vehicleImg) {
         this.brand = brand;
         this.model = model;
         this.vehicleType = vehicleType;
         this.vehicleAge = vehicleAge;
-        // this.vehiclePrice = vehiclePrice;
+        this.vehiclePrice = vehiclePrice;
         this.vehicleImg = vehicleImg;
         vehicleArray.push(this);
     }
@@ -31,23 +31,33 @@ var Vehicles = /** @class */ (function () {
     Vehicles.prototype.showVehicles = function () {
         return "\n      <div class=\"card m-2\">\n        <img src=\"" + this.vehicleImg + "\" class=\"card-img-top\" alt=\"...\">\n        <div class=\"card-body\">\n          <h5 class=\"card-title\">Model: " + this.model + "</h5>\n          <p class=\"card-text\">Brand: " + this.brand + "</p>\n          <p class=\"card-text\">Type: " + this.vehicleType + "</p>\n          <p class=\"card-text\">Age: " + this.vehicleAge + "</p>\n    ";
     };
-    Vehicles.prototype.closingDiv = function () {
-        return "</div>\n    <div class=\"card-footer\">\n      <small class=\"text-muted\">Total Price: $ {this.carPrice}</small>\n    </div>\n  </div>";
+    Vehicles.prototype.calculatePrice = function () {
+        if (this.vehicleAge <= 2) {
+            var newPrice = this.vehiclePrice += 1000;
+            return "</div>\n      <div class=\"card-footer\">\n        <small class=\"text-muted\">Price: " + newPrice + " \u20AC</small>\n      </div>\n    </div>";
+        }
+        else if (this.vehicleAge > 2) {
+            this.vehiclePrice += 100;
+            return "</div>\n      <div class=\"card-footer\" id=\"show\">\n        <small class=\"text-muted\">Price: " + this.vehiclePrice + " \u20AC</small>\n      </div>\n    </div>";
+        }
+    };
+    Vehicles.prototype.showPrice = function () {
+        return document.getElementById("show").style.background = "#F5C518";
     };
     return Vehicles;
 }());
-var carOne = new Vehicles("VW", "Beetle", "Oldie but Goldie", 40, "img/dan-gold-N7RiDzfF2iw-unsplash.jpg");
-var carTwo = new Vehicles("Ferrari", "Yellow Style", "Sport", 1, "img/dhiva-krishna-X16zXcbxU4U-unsplash.jpg");
-var carThree = new Vehicles("VW", "Golf", "Small Family", 4, "img/jose-carbajal-8xyki0bqvgw-unsplash.jpg");
+var carOne = new Vehicles("VW", "Beetle", "Oldie but Goldie", 40, 2009, "img/dan-gold-N7RiDzfF2iw-unsplash.jpg");
+var carTwo = new Vehicles("Ferrari", "Yellow Style", "Sport", 1, 5009, "img/dhiva-krishna-X16zXcbxU4U-unsplash.jpg");
+var carThree = new Vehicles("VW", "Golf", "Small Family", 4, 10009, "img/jose-carbajal-8xyki0bqvgw-unsplash.jpg");
 /* for (let value of vehicleArray) {
   document.getElementById("showCars").innerHTML += value.showVehicles();
   //console.table(carArray);
 } */
-// define 2 other child classes and name them Motorbikes and Trucks
+// define a Motorbikes child class
 var Motorbikes = /** @class */ (function (_super) {
     __extends(Motorbikes, _super);
-    function Motorbikes(brand, model, vehicleType, vehicleAge, vehicleImg, wheels) {
-        var _this = _super.call(this, brand, model, vehicleType, vehicleAge, vehicleImg) || this;
+    function Motorbikes(brand, model, vehicleType, vehicleAge, vehiclePrice, vehicleImg, wheels) {
+        var _this = _super.call(this, brand, model, vehicleType, vehicleAge, vehiclePrice, vehicleImg) || this;
         _this.wheels = wheels;
         return _this;
     }
@@ -56,11 +66,32 @@ var Motorbikes = /** @class */ (function (_super) {
     };
     return Motorbikes;
 }(Vehicles));
-var motorbikeOne = new Motorbikes("Yamaha", "V Star 1100", "Classic", 10, "img/john-torcasio-knDdOAbLKJE-unsplash.jpg", 2);
+var motorbikeOne = new Motorbikes("Yamaha", "V Star 1100", "Classic", 10, 1009, "img/john-torcasio-knDdOAbLKJE-unsplash.jpg", 2);
+var motorbikeTwo = new Motorbikes("Husquarna", "Dessert Edition", "Sport", 5, 60009, "img/nick-wood-Y0u3Pj5giyI-unsplash.jpg", 3);
+// define a Trucks child class
+var Trucks = /** @class */ (function (_super) {
+    __extends(Trucks, _super);
+    function Trucks(brand, model, vehicleType, vehicleAge, vehiclePrice, vehicleImg, trailer) {
+        var _this = _super.call(this, brand, model, vehicleType, vehicleAge, vehiclePrice, vehicleImg) || this;
+        _this.trailer = trailer;
+        return _this;
+    }
+    Trucks.prototype.showVehicles = function () {
+        if (this.trailer == true) {
+            return _super.prototype.showVehicles.call(this) + "\n      <p class=\"card-text\">Trailer: Yes</p>";
+        }
+        else {
+            return _super.prototype.showVehicles.call(this) + "\n      <p class=\"card-text\">Trailer: No</p>";
+        }
+    };
+    return Trucks;
+}(Vehicles));
+var truckOne = new Trucks("Yamaha", "V Star 1100", "Classic", 10, 300009, "img/craige-mcgonigle-E_b5-5EbPPY-unsplash.jpg", true);
+var truckTwo = new Trucks("Husquarna", "Dessert Edition", "Sport", 5, 400009, "img/nicolas-peyrol-xppBmQ9WqJ4-unsplash.jpg", false);
+// loop through each element in the array - to display it in the browser
 for (var _i = 0, vehicleArray_1 = vehicleArray; _i < vehicleArray_1.length; _i++) {
     var value = vehicleArray_1[_i];
-    document.getElementById("showCars").innerHTML += value.showVehicles() + value.closingDiv();
-    console.table(vehicleArray);
+    document.getElementById("showCars").innerHTML += value.showVehicles() + value.calculatePrice();
 }
-console.table(vehicleArray);
+console.table(vehicleArray); // check with console.table() which elements are inside the loop
 // Based on the personal vehicle performance model, kilometers left, number of seats, fuel type and year of production calculate the price once the user click on the button "show price" --- use your dummy custom formula
